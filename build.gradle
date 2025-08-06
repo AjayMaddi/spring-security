@@ -3,27 +3,32 @@ buildscript {
 		resolutionStrategy.dependencySubstitution {
 			substitute module('org.apache.xerces:xercesImpl') with module('xerces:xercesImpl:2.9.1')
 			substitute module('org.apache.xerces:resolver') with module('xerces:resolver:2.9.1')
+			substitute module('io.spring.gradle:docbook-reference-plugin:0.3.1') with module('io.spring.gradle:docbook-reference-plugin:0.3.1-SNAPSHOT')
+			substitute module('io.spring.gradle:propdeps-plugin:0.0.10.RELEASE') with module('io.spring.gradle:propdeps-plugin:0.0.8-SNAPSHOT')
 		}
 	}
 	dependencies {
-		classpath 'io.spring.gradle:spring-build-conventions:0.0.38'
+		classpath 'io.spring.gradle:spring-build-conventions:0.0.38-SNAPSHOT'
 		classpath "io.spring.javaformat:spring-javaformat-gradle-plugin:$springJavaformatVersion"
 		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
 		classpath 'io.spring.nohttp:nohttp-gradle:0.0.5.RELEASE'
 		classpath "io.freefair.gradle:aspectj-plugin:5.0.1"
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+		classpath name:"grolifant-0.14"
+		classpath name:"resolver-2.9.1"
 	}
 	repositories {
+		mavenCentral()
+		gradlePluginPortal()
+		jcenter()
+		maven { url 'https://repo.spring.io/plugins-snapshot' }
 		maven {
-			url = 'https://repo.spring.io/plugins-snapshot'
-			if (project.hasProperty('artifactoryUsername')) {
-				credentials {
-					username "$artifactoryUsername"
-					password "$artifactoryPassword"
-				}
-			}
+			name = "jfreleases"
+			url = "https://releases.jfrog.io/artifactory/oss-releases/"
 		}
-		maven { url 'https://plugins.gradle.org/m2/' }
+		flatDir{
+			dirs 'lib'
+		}
 	}
 }
 
